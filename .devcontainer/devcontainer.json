@@ -1,11 +1,11 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
 {
-	"name": "Ubuntu",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/base:noble",
-	"runArgs": ["--add-host=host.docker.internal:host-gateway"],
-	"postCreateCommand": "sh -lc 'set -eu; target=/workspaces/devcontainer_skills/skills; dest=\"$HOME/.copilot/skills\"; mkdir -p \"$HOME/.copilot\"; if [ -e \"$dest\" ] && [ ! -L \"$dest\" ]; then echo \"$dest already exists and is not a symlink; remove it manually before recreating the container\" >&2; exit 1; fi; ln -sfn \"$target\" \"$dest\"'",
+	"name": "Skills Dev",
+	"build": { "dockerfile": "Dockerfile" },
+	"runArgs": [
+		"--add-host=host.docker.internal:host-gateway",
+		"-p", "2200:2222"
+	],
+	"postStartCommand": "sudo /usr/sbin/sshd",
 	"customizations": {
 		"vscode": {
 			"settings": {
@@ -14,19 +14,4 @@
 			}
 		}
 	}
-
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
-
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "uname -a",
-
-	// Configure tool-specific properties.
-	// "customizations": {},
-
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
 }

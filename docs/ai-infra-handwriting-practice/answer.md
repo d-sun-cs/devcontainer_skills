@@ -1,0 +1,1 @@
+我需要你把 “代码题写在 .cu / .py 文件里，文字答和疑问写在 answer.md 里，复用同一文件多轮迭代” 这种做法写到 ai-infra-handwriting 对应的 skill 中去。我的 skill 根源在 .agent 目录下，我们现在把 .kiro 目录设置成一个软链接，链接到 .agent 目录即可，然后修改都在 .agent 目录下的 skill 中进行
