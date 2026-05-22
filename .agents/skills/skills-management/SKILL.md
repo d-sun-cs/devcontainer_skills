@@ -33,3 +33,4 @@ npx -y skills add <owner/repo>
 2. 不创建任何 home 目录 symlink（`~/.kiro/skills` 等）
 3. 不在 workspace 内创建其他入口（`.claude/skills`、`.github/skills`）
 4. 依赖各 agent 自动扫描 workspace 下的 `.agents/skills/`
+5. 只在 AI tool 无法扫描 workspace 下的 `.agents/skills/` 时，才在 workspace 下创建软链接，例如 `.kiro/skills` → `.agents/skills`，并确保所有 agent 都扫描 `.agents/skills/`
