@@ -2,10 +2,8 @@
 	"name": "Skills Dev",
 	"build": { "dockerfile": "Dockerfile" },
 	"runArgs": [
-		"--add-host=host.docker.internal:host-gateway",
-		"-p", "2200:2222"
+		"--add-host=host.docker.internal:host-gateway"
 	],
-	"postStartCommand": "sudo /usr/sbin/sshd",
 	"customizations": {
 		"vscode": {
 			"settings": {
