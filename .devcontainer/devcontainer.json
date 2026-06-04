@@ -29,8 +29,10 @@
     "--cap-add=NET_ADMIN",
     "--cap-add=NET_RAW",
     "--add-host=host.docker.internal:host-gateway",
-    "-p", "127.0.0.1:2333:22"
+    "-p",
+    "127.0.0.1:2333:22"
   ],
+  "overrideCommand": false,
   "customizations": {
     "vscode": {
       "extensions": [
@@ -71,6 +73,6 @@
     "CLAUDE_CONFIG_DIR": "/home/node/.claude",
     "POWERLEVEL9K_DISABLE_GITSTATUS": "true"
   },
-  "postStartCommand": "sudo /usr/local/bin/init-firewall.sh && sudo /usr/sbin/sshd -D > /tmp/sshd.log 2>&1 &",
+  "postStartCommand": "sudo /usr/local/bin/init-firewall.sh",
   "waitFor": "postCreateCommand"
 }

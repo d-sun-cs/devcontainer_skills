@@ -116,6 +116,7 @@ RUN sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /home/node/.local/bin
 
 # Copy and set up firewall script
 COPY init-firewall.sh /usr/local/bin/
+COPY start-sshd.sh /usr/local/bin/
 USER root
 RUN chmod +x /usr/local/bin/init-firewall.sh && \
   echo "node ALL=(root) NOPASSWD: /usr/local/bin/init-firewall.sh" > /etc/sudoers.d/node-firewall && \
@@ -128,6 +129,10 @@ RUN mkdir -p /run/sshd && \
   sed -i 's/#PubkeyAuthentication yes/PubkeyAuthentication yes/' /etc/ssh/sshd_config && \
   echo "AllowUsers node" >> /etc/ssh/sshd_config && \
   ssh-keygen -A && \
-  echo "node ALL=(root) NOPASSWD: /usr/sbin/sshd" >> /etc/sudoers.d/node-firewall
+  echo "node ALL=(root) NOPASSWD: /usr/sbin/sshd" >> /etc/sudoers.d/node-firewall && \
+  chmod +x /usr/local/bin/start-sshd.sh && \
+  chown node:node /usr/local/bin/start-sshd.sh
 
 USER node
+
+CMD ["/usr/local/bin/start-sshd.sh"]
