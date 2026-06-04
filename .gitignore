@@ -1,0 +1,11 @@
+# Lark / Feishu related skills (ByteDance internal use only)
+.agents/skills/lark-doc/
+.agents/skills/lark-shared/
+
+# Lark CLI config (contains credentials)
+.lark-cli/
+
+# Temporary files
+*.tmp
+*.log
+.DS_Store
