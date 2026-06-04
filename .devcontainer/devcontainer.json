@@ -18,10 +18,18 @@
       "ZSH_IN_DOCKER_VERSION": "1.2.0"
     }
   },
+  "forwardPorts": [22],
+  "portsAttributes": {
+    "22": {
+      "label": "SSH",
+      "onAutoForward": "notify"
+    }
+  },
   "runArgs": [
     "--cap-add=NET_ADMIN",
     "--cap-add=NET_RAW",
-    "--add-host=host.docker.internal:host-gateway"
+    "--add-host=host.docker.internal:host-gateway",
+    "-p", "127.0.0.1:2333:22"
   ],
   "customizations": {
     "vscode": {
@@ -63,6 +71,6 @@
     "CLAUDE_CONFIG_DIR": "/home/node/.claude",
     "POWERLEVEL9K_DISABLE_GITSTATUS": "true"
   },
-  "postStartCommand": "sudo /usr/local/bin/init-firewall.sh",
+  "postStartCommand": "sudo /usr/local/bin/init-firewall.sh && sudo /usr/sbin/sshd -D > /tmp/sshd.log 2>&1 &",
   "waitFor": "postCreateCommand"
 }
