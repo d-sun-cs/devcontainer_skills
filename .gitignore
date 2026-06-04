@@ -1,6 +1,7 @@
 # Lark / Feishu related skills (ByteDance internal use only)
 .agents/skills/lark-doc/
 .agents/skills/lark-shared/
+.agents/skills/intern-daily-report/
 
 # Lark CLI config (contains credentials)
 .lark-cli/
