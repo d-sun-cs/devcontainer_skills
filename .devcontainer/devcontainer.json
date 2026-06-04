@@ -18,19 +18,10 @@
       "ZSH_IN_DOCKER_VERSION": "1.2.0"
     }
   },
-  "forwardPorts": [22],
-  "portsAttributes": {
-    "22": {
-      "label": "SSH",
-      "onAutoForward": "notify"
-    }
-  },
   "runArgs": [
     "--cap-add=NET_ADMIN",
     "--cap-add=NET_RAW",
-    "--add-host=host.docker.internal:host-gateway",
-    "-p",
-    "127.0.0.1:2333:22"
+    "--add-host=host.docker.internal:host-gateway"
   ],
   "overrideCommand": false,
   "customizations": {
