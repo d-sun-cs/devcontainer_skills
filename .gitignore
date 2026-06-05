@@ -6,6 +6,8 @@
 # Lark CLI config (contains credentials)
 .lark-cli/
 
+docs/bytedance/
+
 # Temporary files
 *.tmp
 *.log
