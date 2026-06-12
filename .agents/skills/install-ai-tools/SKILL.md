@@ -103,7 +103,7 @@ Get-Command <bin>
 
 ## Step 2 — 让新工具发现 `.agents/skills/`（本仓库的特殊要求）
 
-**核心原则：优先依赖工具原生扫描；其次使用仓库根目录 `AGENTS.md`；只有都不支持时，才在仓库内创建本地兼容层。绝不在 `$HOME` 下建任何 skill 副本。**
+**核心原则：优先依赖工具原生扫描；如果某个工具强依赖 manifest，则在本地临时生成一个最小 `AGENTS.md`；只有都不支持时，才在仓库内创建本地兼容层。绝不在 `$HOME` 下建任何 skill 副本。**
 
 按以下顺序处理：
 
@@ -118,7 +118,7 @@ Get-Command <bin>
 
 需要回答两个问题：
 - **它读不读 workspace 下的某个目录？** （workspace 模式 vs home 模式）
-- **它期望的入口是什么？** （`.agents/skills/`、`.claude/skills/`、`.kiro/skills/`、`AGENTS.md`、`CLAUDE.md` ...）
+- **它期望的入口是什么？** （`.agents/skills/`、`.claude/skills/`、`.kiro/skills/`、临时 `AGENTS.md`、`CLAUDE.md` ...）
 
 ### 2.2 工具已经能扫描 `.agents/skills/` → 什么都不做
 
@@ -129,9 +129,24 @@ Get-Command <bin>
 > 列出当前可用的 skills，并告诉我 leetcode-reasoning 是做什么的
 ```
 
-### 2.3 工具支持 manifest → 让它读取 `AGENTS.md`
+### 2.3 工具支持 manifest → 本地临时生成极简 `AGENTS.md`
 
-如果工具默认读取仓库根目录的 manifest 文件，优先使用仓库里的 `AGENTS.md`，不要再复制一份技能目录。
+本仓库默认**不提交** `AGENTS.md`，因为某些环境会自动加载它。
+
+如果工具明确要求根目录 manifest，再在本地临时生成一个极简版本，例如：
+
+```markdown
+# Local manifest
+
+Canonical skills live in `.agents/skills/`.
+Read `.agents/skills/skills-management/SKILL.md` for repository rules.
+```
+
+该文件只作为兼容入口：
+
+- 不写完整 skill 列表
+- 不复制 `SKILL.md` 内容
+- 不提交到 Git
 
 ### 2.4 工具只认某个特定目录 → 在仓库内建本地兼容层
 
@@ -162,8 +177,8 @@ New-Item -ItemType Junction -Path .claude\skills -Target ..\.agents\skills
 | 工具 | 期望路径 | 处理方式 |
 | --- | --- | --- |
 | Kiro | `.kiro/skills/` | 优先直读 `.agents/skills/`；不行再建 `.kiro` 兼容层 |
-| Claude Code | `.claude/skills/` 或 manifest | 优先读取 `AGENTS.md`；不行再建 `.claude/skills` 兼容层 |
-| Codex CLI | manifest 为主 | 优先读取 `AGENTS.md` |
+| Claude Code | `.claude/skills/` 或 manifest | 优先直读 `.agents/skills/`；如确有要求再本地生成最小 `AGENTS.md` |
+| Codex CLI | manifest 为主 | 本地生成最小 `AGENTS.md`，不提交 |
 | 其它 | 装完现场确认 | — |
 
 ## Step 3 — 验证清单
@@ -190,7 +205,7 @@ find . -maxdepth 3 -name 'skills' -type d
 3. **复制而非兼容映射**：`cp -r .agents/skills .claude/skills` 会产生第二份真源，后续一定漂移。
 4. **只写 Linux 路径说明**：`/workspaces/devcontainer_skills`、`/home/vscode` 之类路径不能写成跨平台规则。
 5. **Windows 默认依赖 symlink**：很多本地环境没有开启对应权限，优先用 junction 或 manifest。
-6. **工具说 "skill 没找到"**：先确认它能否读 `.agents/skills/` 或 `AGENTS.md`，再决定是否创建兼容层。
+6. **工具说 "skill 没找到"**：先确认它能否读 `.agents/skills/` 或本地临时 manifest，再决定是否创建兼容层。
 
 ## 给 agent 的执行模板
 

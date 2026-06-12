@@ -1,11 +1,6 @@
 # Lark CLI config (contains credentials)
 .lark-cli/
 
-# Local notes and internal working docs that are not part of the
-# cross-platform skill distribution surface.
-docs/bytedance/daily_report/
-docs/bytedance/rl/
-
 # Local tool-specific adapters. The canonical skill source stays in
 # .agents/skills/ and these directories should only be generated locally
 # when a tool cannot read the repository layout directly.

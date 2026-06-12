@@ -21,7 +21,6 @@
 devcontainer_skills/
 ├── .agents/skills/      # 所有 skills 的唯一真源
 ├── .devcontainer/       # 可选：自举 Linux 容器环境
-├── AGENTS.md            # 给支持 manifest 的 AI agent 提供统一入口
 └── README.md            # 仓库级说明
 ```
 
@@ -41,7 +40,8 @@ cd devcontainer_skills
 2. 让 agent 读取本仓库：
 
 - 优先让它直接读取 `.agents/skills/`
-- 如果工具支持 manifest，读取仓库根目录的 `AGENTS.md`
+- 仓库规范集中在 `.agents/skills/skills-management/SKILL.md`
+- 如果某个工具强依赖 manifest，再在本地临时生成最小 `AGENTS.md`
 - 只有当工具既不支持 workspace 扫描，也不支持 manifest 时，才在仓库内生成本地适配目录（例如 `.claude/`、`.kiro/`）。这些目录不是 skill 真源，也不应提交进 Git
 
 3. 用 Git 管理更新：
@@ -91,7 +91,7 @@ git commit -m "update skills"
 优先级固定如下：
 
 1. 工具直接扫描 `.agents/skills/`
-2. 工具读取 `AGENTS.md`
+2. 必要时本地临时生成 manifest
 3. 工具必须要求特定目录时，在仓库内创建本地适配目录
 
 不建议默认依赖 symlink。原因很直接：
@@ -112,7 +112,6 @@ git commit -m "update skills"
 ### 应提交
 
 - `.agents/skills/**`
-- `AGENTS.md`
 - `README.md`
 - 与 skill 使用规则相关的文档
 
@@ -121,14 +120,5 @@ git commit -m "update skills"
 - `.lark-cli/`
 - 各类 token、账号配置、缓存
 - 本地 agent 适配目录（如 `.claude/`、`.kiro/`、`.codex/`）
-
-## 飞书相关说明
-
-飞书技能本体现在可以随仓库一起管理，但认证信息仍然必须留在本地：
-
-- skill 文件：可通过 Git 管理
-- `.lark-cli/`：必须继续忽略
-
-如果你切换到 Windows 本地 TRAE 环境，是合理路径。仓库只需要保证 skill 规则和目录结构可移植，平台相关的认证、PATH、CLI 安装则在本机完成。
-
-详细步骤见 [docs/bytedance/lark-doc-setup.md](docs/bytedance/lark-doc-setup.md)。
+- 环境专用 skill（如 `lark-*`、`intern-daily-report`）
+- 默认不提交的 `AGENTS.md`
