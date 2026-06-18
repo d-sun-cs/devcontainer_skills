@@ -1,0 +1,44 @@
+version: 1
+canonical_skill_dir: ".agents/skills"
+default_target_layout: ".agents"
+layout_model: "target_layout is a project-root directory name such as .agents, .codex, .claude, or .kiro"
+project_manifest: ".agents/skills.yaml"
+project_lockfile: ".agents/skills.lock.yaml"
+project_install_dir: ".agents/skills"
+
+skills:
+  - name: "ai-infra-handwriting"
+    path: ".agents/skills/ai-infra-handwriting"
+    category: "coding-practice"
+    status: "active"
+    summary: "AI infra 手撕代码训练教练，覆盖 CUDA、Triton、PyTorch kernel 推导、测试和性能分析。"
+
+  - name: "find-skills"
+    path: ".agents/skills/find-skills"
+    category: "skill-discovery"
+    status: "active"
+    summary: "帮助发现、评估和安装外部 agent skills。"
+
+  - name: "install-ai-tools"
+    path: ".agents/skills/install-ai-tools"
+    category: "tooling"
+    status: "active"
+    summary: "安装新的 AI CLI 工具，并让它们接入本仓库的 .agents/skills。"
+
+  - name: "intern-daily-report"
+    path: ".agents/skills/intern-daily-report"
+    category: "work-reporting"
+    status: "active"
+    summary: "把零散的实习/工作记录整理成结构清晰、平实具体的当日工作日报。"
+
+  - name: "leetcode-reasoning"
+    path: ".agents/skills/leetcode-reasoning"
+    category: "algorithm-learning"
+    status: "active"
+    summary: "从题目条件出发，严谨推导算法题状态、枚举方式和复杂度优化路径。"
+
+  - name: "my-workflow"
+    path: ".agents/skills/my-workflow"
+    category: "personal-workflow"
+    status: "active"
+    summary: "个人结果优先、自顶向下、渐近式学习和可演化工作流。"

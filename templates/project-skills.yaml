@@ -1,0 +1,8 @@
+# Copy this to <project>/.agents/skills.yaml, or generate it with:
+# python scripts/skillsctl.py install --project <project-root> <skill-name>...
+target_layout: ".agents"
+source:
+  repo: "https://github.com/d-sun-cs/devcontainer_skills"
+  ref: "main"
+skills:
+  - skills-management

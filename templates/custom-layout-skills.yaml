@@ -1,0 +1,8 @@
+# Copy this to <project-root>/<layout>/skills.yaml, or generate it with:
+# python scripts/skillsctl.py install --project <project-root> --layout .codex <skill-name>...
+target_layout: ".codex"
+source:
+  repo: "https://github.com/d-sun-cs/devcontainer_skills"
+  ref: "main"
+skills:
+  - skills-management

@@ -1,0 +1,4 @@
+interface:
+  display_name: "实习日报"
+  short_description: "把零散实习/工作记录整理成具体日报并创建到飞书知识库。"
+  default_prompt: "Use $intern-daily-report to draft a concrete internship daily report from today's work notes."

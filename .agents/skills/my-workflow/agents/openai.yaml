@@ -1,0 +1,4 @@
+interface:
+  display_name: "My Workflow"
+  short_description: "Result-first workflow that evolves with your thinking."
+  default_prompt: "Use $my-workflow to turn messy context into a clear plan, and refine the workflow when stable thinking habits emerge."
