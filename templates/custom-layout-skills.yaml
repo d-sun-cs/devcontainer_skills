@@ -1,8 +1,13 @@
 # Copy this to <project-root>/<layout>/skills.yaml, or generate it with:
-# python scripts/skillsctl.py install --project <project-root> --layout .codex <skill-name>...
+# python scripts/skillsctl.py install --project <project-root> --layout <layout> <skill-name>...
+#
+# This template is shared by tools that use their own project-root directory,
+# such as .codex, .claude, .kiro, .trae, or another single directory name.
+# Replace .codex below with the concrete directory used by your target agent.
 target_layout: ".codex"
 source:
   repo: "https://github.com/d-sun-cs/devcontainer_skills"
   ref: "main"
 skills:
-  - skills-management
+  - my-workflow
+  - weekly-report

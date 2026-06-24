@@ -5,4 +5,5 @@ source:
   repo: "https://github.com/d-sun-cs/devcontainer_skills"
   ref: "main"
 skills:
-  - skills-management
+  - my-workflow
+  - weekly-report

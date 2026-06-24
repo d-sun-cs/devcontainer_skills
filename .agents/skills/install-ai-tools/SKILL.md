@@ -18,7 +18,7 @@ description: 在当前环境中安装新的 AI CLI 工具（如 codex-cli、@ant
 - 所有 skill 的唯一真源：`<repo-root>/.agents/skills/`
 - 不把任何 tool-specific 目录当作真源
 - 先确认当前环境是 Linux、macOS 还是 Windows，再选择对应命令
-- 仓库存储规则详见 [skills-management](../skills-management/SKILL.md)
+- 仓库存储规则详见 `<repo-root>/README.md`、`<repo-root>/registry.yaml` 和 `<repo-root>/scripts/skillsctl.py`
 
 建议先定位仓库根目录：
 
@@ -139,7 +139,7 @@ Get-Command <bin>
 # Local manifest
 
 Canonical skills live in `.agents/skills/`.
-Read `.agents/skills/skills-management/SKILL.md` for repository rules.
+Read `README.md`, `registry.yaml`, and `scripts/skillsctl.py` for repository rules.
 ```
 
 该文件只作为兼容入口：

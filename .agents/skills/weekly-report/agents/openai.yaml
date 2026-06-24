@@ -1,0 +1,4 @@
+interface:
+  display_name: "Weekly Report"
+  short_description: "Plain, concrete weekly report drafting."
+  default_prompt: "Use $weekly-report to turn my raw weekly notes into a clear, concrete weekly report."

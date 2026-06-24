@@ -50,7 +50,14 @@ target-project/
 └── skills/           # installed skill copies
 ```
 
-`--project` 永远指项目根目录。`--layout` 是这个根目录下的 agent 配置目录名，默认是 `.agents`。如果目标工具使用 `.codex`、`.claude`、`.kiro` 等目录，就显式传 `--layout .codex` / `--layout .claude` / `--layout .kiro`。manifest 会把这个目录名原样记录为 `target_layout`，后续同步按同一目录执行。
+`--project` 永远指项目根目录。`--layout` 是这个根目录下的 agent 配置目录名，默认是 `.agents`。如果目标工具使用 `.codex`、`.claude`、`.kiro`、`.trae` 等目录，就显式传 `--layout .codex` / `--layout .claude` / `--layout .kiro` / `--layout .trae`。manifest 会把这个目录名原样记录为 `target_layout`，后续同步按同一目录执行。
+
+`templates/` 只保留两类模板：
+
+- `project-skills.yaml`：默认 `.agents` 布局项目使用。
+- `custom-layout-skills.yaml`：`.codex`、`.claude`、`.kiro`、`.trae` 或其他单目录 agent layout 共用；复制后把 `target_layout` 改成实际目录名即可。
+
+不为每个 agent 工具单独维护一份几乎相同的模板。真正的差异由 `--layout` 参数和 manifest 里的 `target_layout` 表达，这样新增工具时不用改仓库结构。
 
 本仓库只管理你点名托管的 personal skills，不管理工具自带的系统 skills，也不管理插件缓存里的 skills。
 
@@ -138,6 +145,20 @@ Set-Location C:\Users\Admin\Documents\PKM整理思考\devcontainer_skills
 
 ```bash
 python scripts/skillsctl.py list
+```
+
+默认输出是适合终端扫读的短表格，包含 skill 名、分类和 `registry.yaml` 里的短摘要。
+
+只看 skill 名，方便复制到 `install`：
+
+```bash
+python scripts/skillsctl.py list --names-only
+```
+
+查看完整触发描述：
+
+```bash
+python scripts/skillsctl.py list --verbose
 ```
 
 查看某个项目当前哪些是 managed、哪些是 local-only：

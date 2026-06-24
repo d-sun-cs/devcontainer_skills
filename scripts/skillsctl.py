@@ -14,6 +14,7 @@ import hashlib
 import os
 import shutil
 import subprocess
+import textwrap
 from pathlib import Path
 
 
@@ -87,6 +88,49 @@ def unquote(value: str) -> str:
     if len(value) >= 2 and value[0] == value[-1] == '"':
         return value[1:-1].replace('\\"', '"').replace("\\\\", "\\")
     return value
+
+
+def read_registry_metadata() -> dict[str, dict[str, str]]:
+    registry = repo_root() / "registry.yaml"
+    metadata: dict[str, dict[str, str]] = {}
+    if not registry.exists():
+        return metadata
+
+    current: dict[str, str] | None = None
+    for raw_line in registry.read_text(encoding="utf-8").splitlines():
+        line = raw_line.rstrip()
+        stripped = line.strip()
+        if line.startswith("  - name:"):
+            name = unquote(line.split(":", 1)[1])
+            current = {"name": name}
+            metadata[name] = current
+            continue
+        if current is None or not line.startswith("    ") or ":" not in stripped:
+            continue
+        key, value = stripped.split(":", 1)
+        if key in {"path", "category", "status", "summary"}:
+            current[key] = unquote(value)
+
+    return metadata
+
+
+def skill_description(skill_dir: Path) -> str:
+    skill_file = skill_dir / "SKILL.md"
+    if not skill_file.exists():
+        return ""
+    for line in skill_file.read_text(encoding="utf-8").splitlines():
+        if line.startswith("description:"):
+            return unquote(line.split(":", 1)[1]).strip()
+    return ""
+
+
+def wrap_for_terminal(value: str, width: int) -> list[str]:
+    return textwrap.wrap(
+        value,
+        width=max(24, width),
+        break_long_words=True,
+        break_on_hyphens=False,
+    ) or [""]
 
 
 def read_manifest(path: Path) -> list[str]:
@@ -296,24 +340,66 @@ def ensure_project_ignore(project_root: Path, track_installed: bool, layout: str
     )
 
 
-def list_skills(_args: argparse.Namespace) -> None:
+def list_skills(args: argparse.Namespace) -> None:
     root = source_dir()
     if not root.is_dir():
         fail(f"canonical skill directory not found: {root}")
 
-    for skill_dir in sorted(
+    skill_dirs = sorted(
         path for path in root.iterdir() if path.is_dir() and not path.name.startswith(".")
-    ):
+    )
+    metadata = read_registry_metadata()
+
+    rows: list[dict[str, str]] = []
+    for skill_dir in skill_dirs:
         skill_file = skill_dir / "SKILL.md"
         if not skill_file.is_file():
             continue
         name = skill_dir.name
-        description = ""
-        for line in skill_file.read_text(encoding="utf-8").splitlines():
-            if line.startswith("description:"):
-                description = unquote(line.split(":", 1)[1]).strip()
-                break
-        print(f"{name}\t{description}")
+        description = skill_description(skill_dir)
+        info = metadata.get(name, {})
+        rows.append(
+            {
+                "name": name,
+                "category": info.get("category", "-"),
+                "summary": info.get("summary") or description or f"{name} skill",
+                "description": description or info.get("summary", ""),
+            }
+        )
+
+    if args.names_only:
+        for row in rows:
+            print(row["name"])
+        return
+
+    terminal_width = min(shutil.get_terminal_size((100, 20)).columns, 120)
+
+    if args.verbose:
+        for index, row in enumerate(rows):
+            if index:
+                print()
+            print(row["name"])
+            print(f"  category: {row['category']}")
+            print("  summary:")
+            for line in wrap_for_terminal(row["summary"], terminal_width - 4):
+                print(f"    {line}")
+            if row["description"] and row["description"] != row["summary"]:
+                print("  description:")
+                for line in wrap_for_terminal(row["description"], terminal_width - 4):
+                    print(f"    {line}")
+        return
+
+    name_width = min(max([len("skill"), *(len(row["name"]) for row in rows)]), 32)
+    category_width = min(max([len("category"), *(len(row["category"]) for row in rows)]), 20)
+    summary_width = terminal_width - name_width - category_width - 4
+
+    print(f"{'skill':<{name_width}}  {'category':<{category_width}}  summary")
+    print(f"{'-' * name_width}  {'-' * category_width}  {'-' * max(7, summary_width)}")
+    for row in rows:
+        summary_lines = wrap_for_terminal(row["summary"], summary_width)
+        print(f"{row['name']:<{name_width}}  {row['category']:<{category_width}}  {summary_lines[0]}")
+        for line in summary_lines[1:]:
+            print(f"{'':<{name_width}}  {'':<{category_width}}  {line}")
 
 
 def install(args: argparse.Namespace) -> None:
@@ -558,6 +644,16 @@ def build_parser() -> argparse.ArgumentParser:
     subcommands = parser.add_subparsers(dest="command", required=True)
 
     list_cmd = subcommands.add_parser("list", help="List canonical skills")
+    list_cmd.add_argument(
+        "--verbose",
+        action="store_true",
+        help="Show full descriptions in a readable block layout",
+    )
+    list_cmd.add_argument(
+        "--names-only",
+        action="store_true",
+        help="Only print skill names, one per line",
+    )
     list_cmd.set_defaults(func=list_skills)
 
     install_cmd = subcommands.add_parser(

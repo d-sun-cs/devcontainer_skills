@@ -42,3 +42,9 @@ skills:
     category: "personal-workflow"
     status: "active"
     summary: "个人结果优先、自顶向下、渐近式学习和可演化工作流。"
+
+  - name: "weekly-report"
+    path: ".agents/skills/weekly-report"
+    category: "work-reporting"
+    status: "active"
+    summary: "根据用户提供的一周素材整理平实具体、结构清晰的周报。"
