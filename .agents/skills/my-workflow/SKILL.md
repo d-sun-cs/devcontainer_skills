@@ -1,6 +1,6 @@
 ---
 name: "my-workflow"
-description: "Use for the user's daily work, study, research, coding, planning, document整理, review, and problem-solving. Follow the user's preferred thinking style: result-first, top-down, action-oriented, progressive-learning, term-friendly, checklist-based, and designed for reusable knowledge accumulation. Trigger when the user asks to understand code/logs/configs/docs, break down tasks, plan work, summarize discussions, learn a topic, make decisions, turn messy context into clear next actions, or refine this workflow from observed thinking habits."
+description: "Use for the user's daily work, study, research, coding, planning, document整理, review, and problem-solving. Follow the user's preferred thinking style: result-first, top-down, action-oriented, progressive-learning, guided-reading with progress tracking, term-friendly, checklist-based, and designed for reusable knowledge accumulation. Trigger when the user asks to understand code/logs/configs/docs, break down tasks, plan work, summarize discussions, learn a topic, make decisions, turn messy context into clear next actions, or refine this workflow from observed thinking habits."
 ---
 
 # My Workflow
@@ -13,7 +13,7 @@ description: "Use for the user's daily work, study, research, coding, planning, 
 - 先看全局，再下钻细节
 - 先形成行动，再解释原理
 - 先收束问题，再扩展知识
-- 对陌生对象采用渐近式学习：先形成贴近需求的可用印象，再按现实需要加深
+- 对陌生对象和长文采用伴读式渐近学习：先形成贴近需求的地图和可用印象，再小块推进，提问后回到原位置
 - 把一次性对话沉淀成可复用资产
 - 让 skill 随稳定的思维偏好演化，但通过重写、合并和删减保持锋利
 
@@ -131,18 +131,21 @@ description: "Use for the user's daily work, study, research, coding, planning, 
 
 ## Learning Mode
 
-当用户是在学习一个概念、技术、系统或方法时：
+当用户是在学习一个概念、技术、系统、方法，或希望阅读文章/文档时：
 
-默认采用自顶向下、渐近式学习：
+默认采用自顶向下、伴读式、渐近式学习：
 
 1. 先明确它和用户当前需求的关系：为什么现在要懂它，懂到什么程度就够用。
-2. 再给一个顶层地图：它是什么、解决什么问题、和周边概念是什么关系。
-3. 允许先留下一个可用但不完整的印象，明确哪些细节可以暂时模糊。
-4. 只在当前任务、判断或风险需要时继续下钻，不为了完整性提前学习全部细节。
-5. 后续如果现实需求让用户再次接触它，再回到旧印象上加深、修正或补全。
-6. 最后给进一步学习路径，但区分“现在必须学”和“以后遇到再学”。
+2. 先给一个顶层地图：材料分几部分、各自解决什么问题、和周边概念是什么关系；不要立刻展开全文。
+3. 再小块推进：每次只讲一个小块，默认控制在 300 字以内，包含一句话概括、1-3 个关键点、可能卡住的术语、一个理解检查问题，然后停下来等用户。
+4. 始终维护轻量阅读进度：已读、当前卡点、暂时跳过的问题、下一步。
+5. 用户中途提问时，先回答问题，再提醒刚才停在哪里、下一步回到哪里；如果问题暂时不必懂，先放入待理解或暂时跳过列表。
+6. 允许先留下一个可用但不完整的印象，明确哪些细节可以暂时模糊。
+7. 只在当前任务、判断或风险需要时继续下钻，不为了完整性提前学习全部细节。
+8. 后续如果现实需求让用户再次接触它，再回到旧印象上加深、修正或补全。
+9. 最后给进一步学习路径，但区分“现在必须学”和“以后遇到再学”。
 
-默认避免百科式长解释。学习目标是帮助用户形成可迁移的判断框架，而不是只记住概念定义。
+默认避免百科式长解释和一次性讲课模式。学习目标是帮助用户形成可迁移的判断框架，并让 AI 负责维护地图、进度、卡点和下一步。
 
 ## Skill Evolution
 
@@ -227,6 +230,7 @@ description: "Use for the user's daily work, study, research, coding, planning, 
 
 - 先讲一大段背景，再给结论
 - 把简单问题讲成课程
+- 读长文时一次性输出大段解释，导致用户提问后丢失后续阅读进度
 - 为了完整性无限下钻
 - 只说“需要更多信息”
 - 不区分事实、推断和建议

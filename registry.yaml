@@ -48,3 +48,33 @@ skills:
     category: "work-reporting"
     status: "active"
     summary: "根据用户提供的一周素材整理平实具体、结构清晰的周报。"
+
+  - name: "ci-checks-fix"
+    path: ".agents/skills/ci-checks-fix"
+    category: "promoted"
+    status: "active"
+    summary: "Workflow for diagnosing and fixing MR CI Checks failures from downloaded log files. Invoke when the user reports a failed CI check (build/test/lint/pipeline gate) and provides a log file path. Reads only the key parts of logs, classifies the failure, proposes fixes, and records every change to a local doc."
+
+  - name: "code-change"
+    path: ".agents/skills/code-change"
+    category: "promoted"
+    status: "active"
+    summary: "Workflow for traceable, review-friendly code writing and code modification, including optimization, bug fixes, refactors, and maintainability changes, especially when preserving original code for comparison is required. Use when the user explicitly invokes this skill for coding work, or when Codex is clearly modifying code previously written by others and should keep action-prefixed, reviewable changes."
+
+  - name: "lark-shared"
+    path: ".agents/skills/lark-shared"
+    category: "lark"
+    status: "active"
+    summary: "飞书/Lark CLI 共享基础，包含配置初始化、认证登录、身份切换、权限处理和安全规则。"
+
+  - name: "lark-doc"
+    path: ".agents/skills/lark-doc"
+    category: "lark"
+    status: "active"
+    summary: "飞书云文档读取、创建、更新和媒体处理，基于 lark-cli docs v2。"
+
+  - name: "lark-wiki"
+    path: ".agents/skills/lark-wiki"
+    category: "lark"
+    status: "active"
+    summary: "飞书知识库空间、成员和节点管理，用于查找或创建知识库文档与组织层级。"

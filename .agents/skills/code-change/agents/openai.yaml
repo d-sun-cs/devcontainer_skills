@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code Change"
+  short_description: "Action-prefixed, review-friendly code changes"
+  default_prompt: "Use $code-change to make a traceable, review-friendly code change."
